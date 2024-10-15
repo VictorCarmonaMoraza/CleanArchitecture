@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanArchitecture.Domain.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Domain.Vehiculos
 {
-    public sealed class Vehiculo
+    public sealed class Vehiculo : Entity
     {
-        public Guid Id { get; private set; }
+        public Vehiculo(Guid id) : base(id)
+        {
+        }
+
         public string? Modelo { get; private set; }
         public string? Vin { get; private set; }
         public string? Calle { get; private set; }
