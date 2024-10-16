@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Domain.Abstractions;
 using CleanArchitecture.Domain.Alquileres.Enum;
+using CleanArchitecture.Domain.Alquileres.Events;
 using CleanArchitecture.Domain.Vehiculos;
 
 namespace CleanArchitecture.Domain.Alquileres;
@@ -52,4 +53,29 @@ public sealed class Alquiler : Entity
     public DateTime? FechaCompletado { get; private set; }
 
     public DateTime? FechaCancelacion { get; private set; }
+
+    public static Alquiler Reservar(
+        Guid vehiculoId,
+        Guid userId,
+        DateRange duracion,
+        DateTime fechaCreacion,
+        PrecioDetalle precioDetalle
+        )
+    {
+        var alquiler = new Alquiler(
+            Guid.NewGuid(),
+            vehiculoId,
+            userId,
+            duracion,
+            precioDetalle.PrecioPorPeriodo,
+            precioDetalle.Mantenimienoto,
+            precioDetalle.Accesorios,
+            precioDetalle.PrecioTotal,
+            AlquilerStatus.Reservado,
+            fechaCreacion
+            );
+
+        alquiler.RaiseDomainEvent(new AlquilerReservadoDomainEvent(alquiler.Id!));
+        return alquiler;
+    }
 }
