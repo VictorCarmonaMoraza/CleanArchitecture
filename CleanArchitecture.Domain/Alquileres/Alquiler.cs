@@ -81,4 +81,12 @@ public sealed class Alquiler : Entity
         vehiculo.FechaUltimoAlquiler = fechaCreacion;
         return alquiler;
     }
+
+    public Result Confirmar(DateTime utcNow)
+    {
+        if (Status != AlquilerStatus.Reservado)
+        {
+            //Creamos la entidad que genera el error
+        }
+    }
 }
